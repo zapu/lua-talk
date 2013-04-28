@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>
+            lualua
+        </title>
+        <meta charset='utf-8'>
+        <script src='slides.js'>
+        </script>
+    </head>
+    
+    <body style='display: none'>
+        <section class='slides layout-widescreen'>
+            <article>
+              <h1>
+                  Lua
+              </h1>
+              <div class="presenter">
+                  <p>
+                      Michał Zochniak, KOTIK
+                  </p>
+              </div>  
+              <div class="image">
+                 <img src="img/lua.png"/>
+              </div>
+            </article>
+            <article>
+                <h3>Hell, world!</h3>
+<div class="code playground" contenteditable="true" spellcheck="false">
+<pre style="display: none"></pre><pre>
+function func()
+  a = "Hello world"
+  print(a)
+  -- komentarz
+  --[[
+  print("inny komentarz (ugh...)")
+  --]]
+  a = 2 print(a+2)
+end
+
+func()
+</pre><pre style="display: none"></pre>
+</div>
+            </article>
+            <article>
+                <h3>Typy danych</h3>
+                <ul>
+                    <li>Nil</li>
+                    <li>Boolean</li>
+                    <li>Number</li>
+                    <li>String</li>
+                    <li>Table</li>
+                    <li>Function</li>
+                </ul>
+<div class="code playground" contenteditable="true" spellcheck="false">
+<pre style="display: none"></pre><pre>
+a = {2,3,4}
+print("a[1] = " .. a[1])
+a = {a = 2}
+print("a.a = " .. a.a)
+</pre><pre style="display: none"></pre>
+</div>
+            </article>
+            <article>
+                <h3>Userdata</h3>
+                <p style="font-family: Georgia, Times new Roman">The userdata type allows arbitrary C data to be stored in Lua variables. It has no predefined operations in Lua, except assignment and equality test. Userdata are used to represent new types created by an application program or a library written in C; for instance, the standard I/O library uses them to represent files. We will discuss more about userdata later, when we get to the C API.</p>
+            </article>
+        </section>
+    </body>
+
+
+
+    <script src='play.js'>
+    </script>
+
+    <script src='zapu.js'>
+    </script>
+
+    <script src="lua/lua.closure.js"></script>
+
+</html>
