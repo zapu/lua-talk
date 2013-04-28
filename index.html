@@ -66,6 +66,89 @@ print("a.a = " .. a.a)
                 <h3>Userdata</h3>
                 <p style="font-family: Georgia, Times new Roman">The userdata type allows arbitrary C data to be stored in Lua variables. It has no predefined operations in Lua, except assignment and equality test. Userdata are used to represent new types created by an application program or a library written in C; for instance, the standard I/O library uses them to represent files. We will discuss more about userdata later, when we get to the C API.</p>
             </article>
+            <article>
+                <h3>Iteratory</h3>
+<div class="code playground" contenteditable="true" spellcheck="false">
+<pre style="display: none"></pre><pre>
+a = {2,"3",4}
+for i,v in ipairs(a) do
+  print(i .. " " .. v)
+end
+</pre><pre style="display: none"></pre>
+</div>     
+<div class="code playground" contenteditable="true" spellcheck="false">
+<pre style="display: none"></pre><pre>
+a = {
+    [function(x) return 2*x end] = 3,
+    [function(x) return x*x end] = 4,
+    [function(x) return 0 end] = 4
+}
+for i,v in pairs(a) do
+  print(i(v))
+end
+</pre><pre style="display: none"></pre>
+</div>        
+            </article>
+            <article>
+                <h3>Czy raczej "generatory"?</h3>
+<div class="code playground" contenteditable="true" spellcheck="false">
+<pre style="display: none"></pre><pre>
+function range(from,to)
+  return function()
+    return nil
+  end
+end
+
+for i in range(2,5) do
+  print(i)
+end
+</pre><pre style="display: none"></pre>
+</div>  
+            </article>
+            <article>
+                <h3>ipairs</h3>
+<div class="code playground" contenteditable="true" spellcheck="false">
+<pre style="display: none"></pre><pre>
+a = {2,"3",4}
+
+function kotikpairs(tab)
+  local i = 0
+  return function()
+    i = i + 1
+    if(tab[i] == nil) then
+      return nil
+    end
+
+    return i, tab[i]
+  end
+end
+
+for i,v in kotikpairs(a) do
+  print(i .. " " .. v)
+end
+</pre><pre style="display: none"></pre>
+</div>         
+            </article>
+            <article>
+                <h3>Iteratory bez stanu</h3>
+<div class="code playground" contenteditable="true" spellcheck="false">
+<pre style="display: none"></pre><pre>
+function stateless_range(from, to)
+  return function(to, i)
+    if(i >= to) then
+      return nil
+    end
+
+    return i+1,to
+  end, to, from-1
+end
+
+for i in stateless_range(2,5) do
+  print(i)
+end
+</pre><pre style="display: none"></pre>
+</div>         
+            </article>
         </section>
     </body>
 
