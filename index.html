@@ -133,14 +133,16 @@ end
                 <h3>Iteratory bez stanu</h3>
 <div class="code playground" contenteditable="true" spellcheck="false">
 <pre style="display: none"></pre><pre>
-function stateless_range(from, to)
-  return function(to, i)
-    if(i >= to) then
-      return nil
-    end
+local function iter(to, i)
+  if(i >= to) then
+    return nil
+  end
 
-    return i+1,to
-  end, to, from-1
+  return i+1,to
+end
+
+function stateless_range(from, to)
+  return iter, to, from-1
 end
 
 for i in stateless_range(2,5) do
@@ -148,6 +150,140 @@ for i in stateless_range(2,5) do
 end
 </pre><pre style="display: none"></pre>
 </div>         
+            </article>
+            <article>
+                <h3>Iteratory bez stanu cd.</h3>
+<div class="code playground" contenteditable="true" spellcheck="false">
+<pre style="display: none"></pre><pre>
+local function iter(a, i)
+  i = i + 1
+  local v = a[i]
+  if(v) then
+    return i, v
+  end
+end
+function kotik_ipairs(tab)
+    return iter, tab, 0
+end
+
+for _,v in kotik_ipairs({"a", "b", "c"}) do
+  print(v)
+end
+</pre><pre style="display: none"></pre>
+</div>         
+            </article>
+            <article>
+                <h3>next</h3>
+<div class="code playground" contenteditable="true" spellcheck="false">
+<pre style="display: none"></pre><pre>
+function kotik_pairs (t)
+  return next, t, nil
+end
+
+for _,v in kotik_pairs({a=1, b=2, "c"}) do
+  print(v)
+end
+</pre><pre style="display: none"></pre>
+</div>         
+            </article>
+
+            <article>
+                <h3>metatables</h3>
+                <ul>
+                    <li>Każda tablica ma metatablicę.</li>
+                    <li>Każda tablica może być metatablicą innej tablicy.</li>
+                    <li>Wiele tabel może mieć tą samą metatablicę.</li>
+                </ul>
+<div class="code playground" contenteditable="true" spellcheck="false">
+<pre style="display: none"></pre><pre>
+t = {}
+print(getmetatable(t))
+</pre><pre style="display: none"></pre>
+</div>         
+            </article>
+            <article>
+                <h3>Metametody</h3>
+                <ul>
+                    <li>__add, __mul, __sub, __div, __unm, __pow, __concat</li>
+                    <li>__eq, __lt, __le</li>
+                    <li>__index, __newindex</li>
+                </ul>
+<div class="code playground" contenteditable="true" spellcheck="false">
+<pre style="display: none"></pre><pre>
+Pair = {}
+function Pair.new(first, second)
+  local pair = {first = first, second = second}
+  setmetatable(pair, Pair.mt)
+  return pair
+end
+
+Pair.mt = {}
+function Pair.mt.__add(a,b)
+  return Pair.new(a.first + b.first, a.second + b.second)
+end
+
+local a = Pair.new(1,1)
+local b = Pair.new(5,3)
+local c = a + b
+print(c.first .. " " .. c.second)
+</pre><pre style="display: none"></pre>
+</div> 
+            </article>
+            <article>
+                <h3>Klasy</h3>
+                <ul>
+                    <li>Prototypy: <pre>setmetatable(a, {__index = b})</pre></li>
+                </ul>
+<div class="code playground" contenteditable="true" spellcheck="false">
+<pre style="display: none"></pre><pre>
+Class = {
+    a = 1
+}
+
+function Class:new(o)
+  o = o or {}
+  setmetatable(o, self)
+  self.__index = self
+  return o
+end
+
+function Class:test()
+  print(self.a)
+end
+
+local a = Class:new()
+a:test()
+</pre><pre style="display: none"></pre>
+</div> 
+            </article>
+            <article>
+                <h3>Dziedziczenie</h3>
+<div class="code playground" contenteditable="true" spellcheck="false">
+<pre style="display: none"></pre><pre>
+BetterClass = Class:new()
+
+function BetterClass:test2()
+  print(self.a * 2)
+end
+
+GreatClass = BetterClass:new()
+
+function GreatClass:new(o)
+  o = BetterClass.new(GreatClass,o)
+  o.a = 10
+  return o
+end
+
+function GreatClass:test3()
+  print(self.a * 3)
+end
+
+local o = BetterClass:new()
+o:test()
+o:test2()
+
+</pre><pre style="display: none"></pre>
+</div> 
             </article>
         </section>
     </body>
