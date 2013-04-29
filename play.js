@@ -372,7 +372,7 @@
     run2.addEventListener("click", onRun, false);
     var kill = document.createElement('button');
     kill.className = 'kill';
-    kill.innerHTML = 'Kill';
+    kill.innerHTML = 'Clear';
     kill.addEventListener("click", onKill, false);
     var close = document.createElement('button');
     close.className = 'close';
