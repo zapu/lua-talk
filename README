@@ -1,0 +1,7 @@
+Mój talk na temat języka Lua.
+
+Do oglądania w github pages: http://zapu.github.io/lua-talk/
+
+Złożony przy użyciu:
+* szablonu z http://talks.golang.org/ 
+* interpretera Lua skompliowanego w Emscripten z https://github.com/replit/repl.it
